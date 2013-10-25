@@ -1,0 +1,6 @@
+Michael Vuong's diary for assignment 2
+
+DATE	START	END		ACTIVITY		COMMENTS
+25/10	11:00	11:10	Creating Git	Created git repository 
+25/10	11:10	11:15	Copying			Copied over all relevant folders and code
+
