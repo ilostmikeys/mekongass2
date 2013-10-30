@@ -68,11 +68,13 @@ sub cgi_main {
             print $last_error;
             print new_account_form();
         } else {
-            if (create_user_file()) { 
+            if (create_user_file()==1) { 
                 print "Great, you can log in now!\n";
                 print login_form();
                 print new_account_button();
-			}
+		    } else { 
+                print "Error\n";
+            }
         }
 	} else {
 		print login_form();
@@ -143,7 +145,7 @@ sub create_user_file {
     my @user_details = 0;
 	my $flag = 0;
     print "USERNAME = $username\n";
-    if (check_user_exists($username) == 1) { 
+    if (check_user_exists($username) == 0) { 
         print "Username already exists\n";
         print new_account_form();
     } else { 
