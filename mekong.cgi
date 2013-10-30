@@ -41,21 +41,11 @@ sub cgi_main {
 	if (defined $search_terms) {
 		print search_results($search_terms);
 	} elsif (defined $login) {
-        my $realPass = "";
         my $enteredPass = param('password');
-        print "ENTEREDPASS = $enteredPass\n";
-        open F, "<users/$login" or die "Can't open $username file\n";
-        $realPass = <F>;
-        if ($realPass =~ /=/) { 
-			print "YES\n";
-		}
-		$realPass =~ s/=//;
-		print "REALPASS = $realPass\n";
-        if ($realPass eq $enteredPass) { 
-            print "Logged In!\n";
+        if (authenticate($login, $enteredPass)) { 
             print search_form();
         } else { 
-            print "Incorrect password or username conbination\n";
+            print $last_error;
             print login_form();
         }
     } elsif (defined $new_account) { 
@@ -69,8 +59,6 @@ sub cgi_main {
                 print "Great, you can log in now!\n";
                 print login_form();
                 print new_account_button();
-            } else { 
-				print "Creating user failed\n";
 			}
         }
 	} else {
@@ -121,15 +109,16 @@ sub check_user_exists {
     my $dir = 'users/';
     my $flag = 0;
 
-    print "PASSED_IN[0]=$passed_in[0]";
-
     opendir (DIR, $dir) or die "Can't open directory: $dir\n";
 
     while (my $file = readdir(DIR)) { 
+        # if the same username exists inside the directory
         if ($passed_in[0] eq $file) { 
-            $flag = 1;
-        } else { 
+            # flag is unchanged
             $flag = 0;
+        } else { 
+            # username doesn't exist change the flag
+            $flag = 1;
         }
     }
     closedir(DIR);
