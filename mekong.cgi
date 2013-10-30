@@ -37,12 +37,25 @@ sub cgi_main {
 	my $new_account = param('new_account');
     my $username = param('username');
     my $password = param('password');
+    my $orders = param('orders');
+    my $check_out = param('check_out');
+    my $basket = param('basket');
 
 	if (defined $search_terms) {
 		print search_results($search_terms);
+        print orders_button();
+        print basket_button();
+        print check_out_button();
+    } elsif (defined $orders) { 
+        print orders_page();
+    } elsif (defined $basket) { 
+        print basket_page();
+    } elsif (defined $check_out) { 
+        print check_out_page();
 	} elsif (defined $login) {
         my $enteredPass = param('password');
         if (authenticate($login, $enteredPass)) { 
+            print "What are you after?";
             print search_form();
         } else { 
             print $last_error;
@@ -180,14 +193,70 @@ sub search_results {
 	my ($search_terms) = @_;
 	my @matching_isbns = search_books($search_terms);
 	my $descriptions = get_book_descriptions(@matching_isbns);
-	return <<eof;
-	<p>$search_terms
-	<p>@matching_isbns
-	<pre>
-		$descriptions
-	</pre>
-	<p>
+    
+    print "<table border=1 rules=rows>\n";
+    print "<th>", "You searched for: $search_terms", "</th>";
+    foreach $isbn (@matching_isbns) { 
+        print "<tr>\n";
+        print "<td>", get_book_descriptions($isbn), "</td>\n"; 
+        print "</tr>\n";
+    }
+    print "</table>\n";
+
+
+#	return <<eof;
+#	<p>@matching_isbns
+#	<pre>
+#    <table border="1">
+#    <tr>
+#    <th>You searched for: "$search_terms"</th>
+#    </tr>
+#		<td>$descriptions</td>
+#    </table>
+#	</pre>
+#	<p>
+#eof
+}
+sub orders_button { 
+    return <<eof;
+    <p>
+        <form>
+            <input type="submit" name="orders" value="Orders">
+        </form>
+    <p>
 eof
+}
+
+sub orders_page { 
+   print "Your Orders:\n";
+}
+
+sub check_out_button { 
+    return <<eof;
+    <p>
+        <form>
+            <input type="submit" name="check_out" value="Check Out">
+        </form>
+    <p>
+eof
+}
+
+sub check_out_page { 
+   print "Check Out:\n";
+}
+
+sub basket_button { 
+    return <<eof;
+    <p>
+        <form>
+            <input type="submit" name="basket" value="Basket">
+        </form>
+    <p>
+eof
+}
+
+sub basket_page { 
+   print "Your Basket:\n";
 }
 
 #

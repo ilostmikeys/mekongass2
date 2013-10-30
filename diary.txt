@@ -9,9 +9,13 @@ DATE	START	END		ACTIVITY		COMMENTS
 29/10	12:00	18:00	Coding			Solved previous error of the button
 										New account details are now written to file
 										Legal_username/password checking is done
-30/10	12:30			Coding			Authentication should work now
+30/10	12:30	13:30	Coding&Debug	Authentication should work now
 										Fixing bugs with checking whether user
 											exists or not
+30/10	22:00			Coding			Doing the html search formatting
+										created basket button
+										created check out button
+										created orders button
 
 					
 
