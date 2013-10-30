@@ -3,4 +3,26 @@ Michael Vuong's diary for assignment 2
 DATE	START	END		ACTIVITY		COMMENTS
 25/10	11:00	11:10	Creating Git	Created git repository 
 25/10	11:10	11:15	Copying			Copied over all relevant folders and code
+26/10	13:00	13:20	Coding			Coding in the password, new account forms
+27/10	15:00	15:30	Debug			Tried to figure out why the button didn't
+											work on the website
+29/10	12:00	18:00	Coding			Solved previous error of the button
+										New account details are now written to file
+										Legal_username/password checking is done
+30/10	12:30			Coding			Authentication should work now
+										Fixing bugs with checking whether user
+											exists or not
+
+					
+
+
+
+
+
+
+
+
+
+
+
 
