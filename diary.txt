@@ -12,10 +12,15 @@ DATE	START	END		ACTIVITY		COMMENTS
 30/10	12:30	13:30	Coding&Debug	Authentication should work now
 										Fixing bugs with checking whether user
 											exists or not
-30/10	22:00			Coding			Doing the html search formatting
+30/10	22:00	23:00	Coding			Doing the html search formatting
 										created basket button
 										created check out button
 										created orders button
+2/11	13:00	15:00	Coding			Finished off the html search formatting
+											edited the search form to provide
+											the img urls
+										centered all the results
+										aligned them in the table
 
 					
 

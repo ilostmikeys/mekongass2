@@ -196,14 +196,35 @@ sub search_results {
 	my @matching_isbns = search_books($search_terms);
 	my $descriptions = get_book_descriptions(@matching_isbns);
     
-    print "<table border=1 rules=rows>\n";
-    print "<th>", "You searched for: $search_terms", "</th>";
+    print "<table border=1 rules=rows>";
+    print "<tr> <th> ", "Book Cover", "</th>";
+    print "<th>", "Title", "</th>";
+    print "<th>", "Author", "</th>";
+    print "<th>", "Cost", "</th> </tr>";
     foreach $isbn (@matching_isbns) { 
         print "<tr>\n";
-        print "<td>", get_book_descriptions($isbn), "</td>\n"; 
-        print "</tr>\n";
+        my $isbn_desc = get_book_descriptions($isbn);
+        my $cost = $isbn_desc;
+        my $desc = $isbn_desc;
+        my $imgurl = $desc;
+        $imgurl =~ s/([^ ]+).*/$1/g;
+#print $imgurl;
+        my $author = $desc;
+        my $title = $desc;
+        $cost =~ s/^[^\$]*//;
+        $cost =~ s/[a-zA-Z\(\)\?\-\&\,\!\'\:]//g;
+        $desc =~ s/\$//g;
+        $desc =~ s/\d//g;
+        $desc =~ s/\.//g;
+        $title =~ s/.*-//g;
+        $author =~ s/.*-//g;
+        print "<td> <center>", "<img src=$imgurl>", "</center> </td>";
+        print "<td> <center>", $title, "</center> </td>"; 
+        print "<td> <center>", $author, "</center> </td>";
+        print "<td> <center>", $cost, "</center> </td>";
+        print "</tr>";
     }
-    print "</table>\n";
+    print "</table>";
 
 
 #	return <<eof;
@@ -946,9 +967,10 @@ sub get_book_descriptions {
 		die "Internal error: unknown isbn $isbn in print_books\n" if !$book_details{$isbn}; # shouldn't happen
 		my $title = $book_details{$isbn}{title} || "";
 		my $authors = $book_details{$isbn}{authors} || "";
+        my $imgurl = $book_details{$isbn}{smallimageurl} || "";
 		$authors =~ s/\n([^\n]*)$/ & $1/g;
 		$authors =~ s/\n/, /g;
-		$descriptions .= sprintf "%s %7s %s - %s\n", $isbn, $book_details{$isbn}{price}, $title, $authors;
+		$descriptions .= sprintf "%s %7s %s - %s\n", $imgurl, $isbn, $book_details{$isbn}{price}, $title, $authors;
 	}
 	return $descriptions;
 }
